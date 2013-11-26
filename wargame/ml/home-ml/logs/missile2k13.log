@@ -1,0 +1,5 @@
+DEBUG:root:current_focus = 0, len(self.body) = 1
+INFO:DBController:Opening shelve (missile2k13.shelve)
+DEBUG:DBController:{'lightStatus': True, 'buildings': [{'crashed': False, 'flag': 'GngWo2MipVoLTIhID7eJ', 'name': 'Grate ciel', 'value': 3}, {'crashed': True, 'flag': 'sACGbNlemvcMXX9K2sD6', 'name': 'something', 'value': 5}], 'remainingMissiles': [3, 4, 4], 'launches': [{'mlId': '0', 'source': '192.168.200.225', 'cb': 'set([1])', 'datetime': datetime.datetime(2013, 11, 1, 23, 23, 30, 104061)}], 'loginFlag': 'K5ycRDu478mLQTZnTiYX', 'flagsGiven': ['sACGbNlemvcMXX9K2sD6'], 'ml': [4, 4, 4], 'secureMods': {'fire': {'locked': True, 'description': 'This module let the country fire a missile', 'key': 'DPQJDUEja43H8Dfhmjaq'}}}
+DEBUG:root:current_focus = 0, len(self.body) = 2
+}}

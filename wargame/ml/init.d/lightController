@@ -1,0 +1,75 @@
+#!/bin/bash
+#
+#    init.d script for lightController.py
+#    Copyright (C) 2013  Martin Dubé
+#    Version: 2013-10-20:2020
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+PID_FOLDER='/var/run/lightController/'
+PID_FILE='lc.pid'
+SCRIPT_PATH='/root/'
+SCRIPT_NAME='lightController.py'
+#SCRIPT_ARGUMENTS='--pid-file '$PID_FOLDER''$PID_FILE
+SCRIPT_ARGUMENTS=''
+CHUID='root'
+
+#get -e
+. /lib/lsb/init-functions
+export PATH="${PATH:+$PATH:}/usr/sbin:/sbin"
+umask 077
+
+# Prepare pid file
+#mkdir -p $PID_FOLDER
+#chown $CHUID $PID_FOLDER
+#chmod o-rwx,g-rwx $PID_FOLDER
+
+do_start()
+{
+	log_daemon_msg "Starting the light controller"
+	if start-stop-daemon --start --quiet --background --oknodo -c $CHUID --pidfile $PID_FOLDER''$PID_FILE --exec $SCRIPT_PATH''$SCRIPT_NAME; then
+	    log_end_msg 0
+	else
+	    log_end_msg 1
+	fi
+}
+
+do_stop()
+{
+    log_daemon_msg "Stopping the light controller" $SCRIPT_NAME
+	if start-stop-daemon --stop --quiet --oknodo --pidfile $PID_FOLDER''$PID_FILE; then
+	    log_end_msg 0
+	else
+	    log_end_msg 1
+	fi
+}
+
+case $1 in
+    start) 
+        do_start
+        ;;
+    stop) 
+        do_stop
+        ;;
+    restart)
+        do_stop
+        do_start
+        ;;
+    status)
+	    status_of_proc -p $PID_FOLDER''$PID_FILE $SCRIPT_PATH$SCRIPT_NAME && exit 0 || exit $?
+	    ;;
+    *)
+	    log_action_msg "Usage: lightController.init {start|stop|restart|status}"
+	    exit 1
+esac
