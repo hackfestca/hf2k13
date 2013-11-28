@@ -1,0 +1,8 @@
+# Files Git ignore file #
+#########################
+
+# Ignoring team files #
+client*
+openvpn*
+server*
+team*
