@@ -1,0 +1,76 @@
+# ca-sign.cnf
+# This configuration file is used by the 'ca' command, to create signed certificates.
+[ ca ]
+default_ca              = CA_default            # The default ca section
+
+[ CA_default ]
+dir                     = CA			# Where everything is kept
+certs                   = $dir/                 # Where the issued certs are kept
+crl_dir                 = $dir/                 # Where the issued crl are kept
+new_certs_dir           = $dir/                 # default place for new certs
+
+private_key             = $dir/ca.key           # The private key
+certificate             = $dir/ca.crt           # The CA root certificate
+database                = $dir/index.txt        # List of signed certificates
+serial                  = $dir/serial           # The current serial number
+crlnumber               = $dir/crlnumber        # the current crl number
+crl                     = $dir/crl.pem          # The current CRL
+RANDFILE                = $dir/.rand            # private random number file
+
+unique_subject          = no                    # allow multiple certificates with same subject.
+default_md              = sha1                  # Use hash algorithm specified in the request
+default_days            = 730                   # client certificates last 2 years
+default_crl_days        = 30                    # How often clients should download the CRL
+
+#x509_extensions         = X509_ca               # The x509 extensions for the root certificate
+#x509_extensions         = X509_server           # The x509 extensions for a server certificate
+#x509_extensions         = X509_client           # The x509 extensions for a client certificate
+
+# These options control what fields from the distinguished name to show before signing.
+# They are required to make sure all fields are shown.
+name_opt                = ca_default            # Subject Name options
+cert_opt                = ca_default            # Certificate field options
+
+copy_extensions         = copy                  # Accept requested extensions
+
+policy                  = policy_dn
+
+[ X509_ca ]
+# X509v3 extensions for the root certificate
+basicConstraints        = CA:TRUE
+#nsCertType              = sslCA                 # restrict the usage
+keyUsage                = keyCertSign, cRLSign  # restrict the usage
+subjectKeyIdentifier    = hash
+authorityKeyIdentifier  = keyid:always,issuer:always
+#subjectAltName          = email:move            # Move email address from DN to extensions
+#crlDistributionPoints   = URI:http://www.example.com/example_ca.crl
+
+[ X509_server ]
+# X509v3 extensions for server certificates
+basicConstraints        = CA:FALSE
+nsCertType              = server                # restrict the usage
+keyUsage                = digitalSignature, keyEncipherment
+extendedKeyUsage        = serverAuth            # restrict the usage
+subjectKeyIdentifier    = hash
+authorityKeyIdentifier  = keyid,issuer
+#subjectAltName          = email:move            # Move email address from DN to extensions
+#crlDistributionPoints   = URI:http://www.example.com/example_ca.crl
+
+[ X509_client ]
+# X509v3 extensions for client certificates
+basicConstraints        = CA:FALSE
+nsCertType              = client                # restrict the usage
+keyUsage                = digitalSignature      # restrict the usage
+extendedKeyUsage        = clientAuth            # restrict the usage
+subjectKeyIdentifier    = hash
+authorityKeyIdentifier  = keyid,issuer
+#subjectAltName          = email:move            # Move email address from DN to extensions
+#crlDistributionPoints   = URI:http://www.example.com/example_ca.crl
+
+[ policy_dn ]
+countryName             = supplied              # required parameter, any value allowed
+stateOrProvinceName     = optional
+localityName            = optional
+organizationName        = match                 # required, and must match root certificate
+organizationalUnitName  = optional
+commonName              = supplied              # required parameter, any value allowed
