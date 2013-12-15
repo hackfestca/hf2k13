@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CHROOT=/chroot
+CHROOT=/chroot/bind
 
 mkdir $CHROOT
 mkdir -p $CHROOT/etc/bind/master $CHROOT/etc/bind/slave $CHROOT/etc/bind/dnssec-keys
@@ -18,7 +18,7 @@ mknod $CHROOT/dev/null c 1 3
 mknod $CHROOT/dev/random c 1 8
 chmod 666 $CHROOT/dev/null
 chmod 666 $CHROOT/dev/random
-mkdir -p $CHROOT/var/cache $CHROOT/var/log $CHROOT/var/run $CHROOT/var/log/named $CHROOT/var/run/bind $CHROOT/var/ca$
+mkdir -p $CHROOT/var/cache $CHROOT/var/log $CHROOT/var/run $CHROOT/var/log/named $CHROOT/var/run/named $CHROOT/var/cache/named
 chmod 770 $CHROOT/var/log/named
-chmod 775 $CHROOT/var/run/named $CHROOT/var/cache/bind
-chown root:bind $CHROOT/var/log/named $CHROOT/var/run/bind $CHROOT/var/cache/bind
+chmod 775 $CHROOT/var/run/named $CHROOT/var/cache/named
+chown root:bind $CHROOT/var/log/named $CHROOT/var/run/named $CHROOT/var/cache/named
