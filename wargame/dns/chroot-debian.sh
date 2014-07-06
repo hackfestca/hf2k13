@@ -22,3 +22,5 @@ mkdir -p $CHROOT/var/cache $CHROOT/var/log $CHROOT/var/run $CHROOT/var/log/named
 chmod 770 $CHROOT/var/log/named
 chmod 775 $CHROOT/var/run/bind $CHROOT/var/cache/bind
 chown root:bind $CHROOT/var/log/named $CHROOT/var/run/bind $CHROOT/var/cache/bind
+sed -e "s,\"-u bind\",\"-t /chroot/bind -u bind\"," /etc/default/bind9 > /tmp/x
+mv /tmp/x /etc/default/bind9
