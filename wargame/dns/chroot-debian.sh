@@ -2,6 +2,8 @@
 
 CHROOT=/chroot/bind
 
+service bind9 stop
+
 mkdir -p $CHROOT
 mkdir -p $CHROOT/etc/bind/master $CHROOT/etc/bind/slave $CHROOT/etc/bind/dnssec-keys
 chmod 770 $CHROOT/etc/bind/master $CHROOT/etc/bind/slave
@@ -24,3 +26,5 @@ chmod 775 $CHROOT/var/run/bind $CHROOT/var/cache/bind
 chown root:bind $CHROOT/var/log/named $CHROOT/var/run/bind $CHROOT/var/cache/bind
 sed -e "s,\"-u bind\",\"-t /chroot/bind -u bind\"," /etc/default/bind9 > /tmp/x
 mv /tmp/x /etc/default/bind9
+
+service bind9 start
