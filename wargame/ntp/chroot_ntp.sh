@@ -19,10 +19,7 @@ mv /var/log/ntpstats $rootfs/var/log
 ln -s $rootfs/var/log/ntpstats /var/log/ntpstats
 chown -R ntp:ntp $rootfs/var/log/ntpstats
 
-sed -e "s,'-g','-4 -i $rootfs -g'," /etc/default/ntp > /tmp/x
+sed -e "s,'-g','-i $rootfs -g'," /etc/default/ntp > /tmp/x
 mv /tmp/x /etc/default/ntp
-
-sed -e "s,restrict -6,#restrict -6," -e "s,restrict ::1,#restrict ::1," /etc/ntp.conf > /tmp/x
-mv /tmp/x /etc/ntp.conf
 
 /etc/init.d/ntp start
